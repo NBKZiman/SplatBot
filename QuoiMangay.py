@@ -40,6 +40,9 @@ LIEUX = [
         'nom': 'BK',
         'type': ['burger', 'fastfood', 'cher', '  ']
     },
+        'nom': 'Kebab',
+        'type'; ['commande', ' ']
+    }
 ]
 
 def add_type(name: str):
