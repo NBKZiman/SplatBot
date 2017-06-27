@@ -60,7 +60,7 @@ class SplatDate:
 
     @staticmethod
     def seconds_since_splat() -> float:
-        t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
+        t = (2017, 3, 27, 20, 0, 0, 1, 76, 1)
         return time.mktime(time.localtime()) - time.mktime(t)
 
 
