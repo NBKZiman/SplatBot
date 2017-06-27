@@ -36,6 +36,10 @@ class SplatDate:
                 self.month = 'Avrylocus'
                 self.day = day - 24
 
+    def formatted_date(self):
+        suffix = "er" if self.day == 1 else ""
+        return "{day}{suffix} {month} de l'an {year}".format(day=self.day, suffix=suffix, month=self.month, year=self.year)
+
 
 FERIE_DATE = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]]  # tableau des jours fériés
 FERIE_CAUSE = ['Le Splat', 'Hell-a-J', 'Hell-a-J']  # Tableau des noms des jours fériés
@@ -70,14 +74,8 @@ async def on_message(message):
         month = time.localtime()[1]
         day = time.localtime()[2]
         today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
-        if today_splat_date.day == 1:
-            await SplatBot.send_message(message.channel,
-                                        'Nous sommes le ' + str(today_splat_date.day) + 'er ' + str(today_splat_date.month) + ' de l\'an ' + str(
-                                            today_splat_date.year))  # affichage du message
-        else:
-            await SplatBot.send_message(message.channel,
-                                        'Nous sommes le ' + str(today_splat_date.day) + ' ' + str(today_splat_date.month) + ' de l\'an ' + str(
-                                            today_splat_date.year))
+        await SplatBot.send_message(message.channel,
+                                    "Nous sommes le {}".format(today_splat_date.formatted_date()))
 
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
         a = est_ferie()
