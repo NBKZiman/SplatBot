@@ -12,9 +12,7 @@ FERIE_CAUSE = ['Le Splat', 'Hell-a-J', 'Hell-a-J']  # Tableau des noms des jours
 
 
 def est_ferie():
-    year = time.localtime()[0]
-    month = time.localtime()[1]
-    day = time.localtime()[2]
+    year, month, day, *_ = time.localtime()
     today_splat_date = SplatDate(year, month, day)
     for i in range(len(FERIE_DATE)):
         if (today_splat_date.month == FERIE_DATE[i][1] and today_splat_date.day == FERIE_DATE[3]):
@@ -36,9 +34,7 @@ async def on_ready():
 async def on_message(message):
     """Definit les reactions aux messages des utilisateurs"""
     if message.content.startswith('!splat'):  # reaction à !splat
-        year = time.localtime()[0]
-        month = time.localtime()[1]
-        day = time.localtime()[2]
+        year, month, day, *_ = time.localtime()
         today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
         await SplatBot.send_message(message.channel,
                                     "Nous sommes le {}".format(today_splat_date.formatted_date()))
@@ -75,7 +71,7 @@ async def on_message(message):
         await SplatBot.send_message(message.channel, 'Pong')
 
     if message.content.startswith('!theGame'):
-        for i in range(3):
+        for _ in range(3):
             temps_aleatoire = random.randint(1, 120)
             time.sleep(temps_aleatoire)
             await SplatBot.send_message(message.channel, 'Perdu @sn00c#3984')
