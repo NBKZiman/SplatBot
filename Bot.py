@@ -3,19 +3,20 @@
 import asyncio
 import random
 import time
-from types import *
 
 import discord
 
-from SplatCalendar import SplatDate, today_holiday_cause
+from SplatCalendar import SplatDate, today_holiday_cause, holiday_cause
 
 splat_bot = discord.Client()  # nom du bot
 
-def assert_date(year, month, day) :
-    if (type(year) is int) and (type(month) is int) and (type(day) is int) :
-          if (month > 0 and month < 13) and (day > 0 and day < 32) :
-                return True
+
+def assert_date(year, month, day):  # une fonction qui vérifie que les dates donné en argument sont bien valide
+    if (type(year) is int) and (type(month) is int) and (type(day) is int):
+        if (month > 0 and month < 13) and (day > 0 and day < 32):
+            return True
     return False
+
 
 @splat_bot.event
 async def on_ready():
@@ -38,39 +39,54 @@ async def on_message(message):
         year, month, day, *_ = time.localtime()
         today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
 
-        if message.content== '!splat' :
+        if (message.content == '!splat'):
             await splat_bot.send_message(message.channel,
                                          "Nous sommes le {}".format(today_splat_date.formatted_date()))
-        elif number_option == 4 :
+        elif number_option == 4:
             year_option, month_option, day_option = int(cmd[3]), int(cmd[2]), int(cmd[1])
             if not assert_date(year_option, month_option, day_option) :
                  await splat_bot.send_message(message.channel,
                                               "Go fuck yourself")
-            else :
+            else:
                 date_option = (year_option, month_option, day_option, 0, 0, 0, 1, 76, 1)
-                futur = (time.mktime(time.localtime()) - time.mktime(date_option) < 0)  # on veut savoir si la date proposé en option est une date futur ou passé d'où ce booléen
-                if futur :
+                futur = (time.mktime(time.localtime()) - time.mktime(date_option) < 0)  # on veut savoir si la date
+                # prop# osé en option est une date futur ou passé d'où ce booléen
+                if futur:
                     splat_date_option = SplatDate(year_option, month_option, day_option)
                     await splat_bot.send_message(message.channel,
                                                  "Nous serons le {}".format(splat_date_option.formatted_date()))
-                else :
+                else:
                     splat_date_option = SplatDate(year_option, month_option, day_option)
                     await splat_bot.send_message(message.channel,
                                              "Nous étions le {}".format(splat_date_option.formatted_date()))
 
-    if message.content.startswith('!fériés'):  # réaction à !Feriés
-        holiday_cause = today_holiday_cause()
-        if holiday_cause:
-            await splat_bot.send_message(message.channel, "C'est un jour férié : {}".format(holiday_cause))
-        else:
-            await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
+    if message.content.startswith('!férié'):  # réaction à !Feriés
+        if message.content == '!férié':
+            holiday_cause_is = today_holiday_cause()
+            if holiday_cause_is:
+                await splat_bot.send_message(message.channel, "C'est un jour férié : {}".format(holiday_cause_is))
+            else:
+                await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
+        elif number_option == 4:
+            year_option, month_option, day_option = int(cmd[3]), int(cmd[2]), int(cmd[1])
+            if not assert_date(year_option, month_option, day_option):
+                await splat_bot.send_message(message.channel,
+                                            "Go fuck yourself")
+            else:
+                holiday_cause_is = holiday_cause(int(cmd[3]), int(cmd[2]), int(cmd[1]))
+                if holiday_cause_is:
+                    await splat_bot.send_message(message.channel, "C'est un jour férié : {}".format(holiday_cause_is))
+                else:
+                    await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
-        await splat_bot.send_message(message.channel, 'Version 0.1.3')
+        await splat_bot.send_message(message.channel, 'Version 1.0.0')
+
 
     if message.content.startswith('!help'):
         await splat_bot.send_message(message.channel,
                                      "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
+
 
     if message.content.startswith('!seconde'):
         await splat_bot.send_message(message.channel,

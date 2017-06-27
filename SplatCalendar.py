@@ -5,18 +5,18 @@ from typing import Optional
 
 HOLIDAYS = [
     {
-        'month': 'Gvrier',
+        'month': 'Givier',
         'day': 1,
         'cause': 'Le Splat'
     },
     {
-        'month': 'Gevrier',
+        'month': 'Févrilyo',
         'day': 1,
         'cause': 'Hell-a-J'
     },
     {
-        'month': 'Gevrier',
-        'day': 1,
+        'month': 'Févrilyo',
+        'day': 2,
         'cause': 'Hell-a-J'
     }
 ]
@@ -36,11 +36,11 @@ class SplatDate:
                 self.month = 'Givier'
                 self.day = day + 5
             else:
-                self.month = 'Fevrilyo'
+                self.month = 'Févrilyo'
                 self.day = day - 29 + 1
         if month == 5:
             if day < 14:
-                self.month = 'Fevrilyo'
+                self.month = 'Févrilyo'
                 self.day = day + 2
             else:
                 self.month = 'Maikkar'
@@ -64,13 +64,17 @@ class SplatDate:
         return time.mktime(time.localtime()) - time.mktime(t)
 
 
-def today_holiday_cause() -> Optional[str]:
-    year, month, day, *_ = time.localtime()
-    today_splat_date = SplatDate(year, month, day)
+def holiday_cause(year, month, day) -> Optional[str]:
+    splat_date = SplatDate(year, month, day)
     matching_holiday = list(
-        filter(lambda holiday: holiday['day'] == today_splat_date.day and holiday['month'] == today_splat_date.month,
+        filter(lambda holiday: holiday['day'] == splat_date.day and holiday['month'] == splat_date.month,
                HOLIDAYS))
     if matching_holiday and len(matching_holiday) == 1:
         return matching_holiday[0]['cause']
     else:
         return None
+
+
+def today_holiday_cause() -> Optional[str]:
+    year, month, day, *_ = time.localtime()
+    return holiday_cause(year, month, day)
