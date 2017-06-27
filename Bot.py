@@ -80,30 +80,30 @@ async def on_message(message):
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
         a = est_ferie()
         if a[0]:
-            await SplatBot.send_message(message.channel, 'C\'est un jour férié : ' + FERIE_CAUSE[a[1]])
+            await SplatBot.send_message(message.channel, "C'est un jour férié : {}".format(FERIE_CAUSE[a[1]]))
         else:
-            await SplatBot.send_message(message.channel, 'Ce n\'est pas un jour férié')
+            await SplatBot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
         await SplatBot.send_message(message.channel, 'Version 0.1.2')
 
     if message.content.startswith('!help'):
         await SplatBot.send_message(message.channel,
-                                    'Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1\', !quiEstCe?, !perdu !version, !gitHub et !theGame')
+                                    "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
 
     if message.content.startswith('!seconde'):
         t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
         a = time.mktime(time.localtime()) - time.mktime(t)
-        await SplatBot.send_message(message.channel, 'Il s\'est écoulé ' + str(a) + ' secondes depuis le Splat')
+        await SplatBot.send_message(message.channel, "Il s'est écoulé {} secondes depuis le Splat".format(a))
 
-    if message.content.startswith('!estCeQueJeDoisFaireG1\''):
+    if message.content.startswith("!estCeQueJeDoisFaireG1'"):
         await SplatBot.send_message(message.channel, 'oui')
 
     if message.content.startswith('!quiEstCe?'):
-        await SplatBot.send_message(message.channel, 'C\'est moi !! Le Splat Bot')
+        await SplatBot.send_message(message.channel, "C'est moi !! Le Splat Bot")
 
     if message.content.startswith('!perdu'):
-        await SplatBot.send_message(message.channel, 'J\'ai perdu')
+        await SplatBot.send_message(message.channel, "J'ai perdu")
 
     if message.content.startswith('!ping'):
         await SplatBot.send_message(message.channel, 'Pong')
