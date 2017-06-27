@@ -1,24 +1,13 @@
+#!/usr/bin/env python
+# coding: utf-8
 import random
 import time
 
 import discord
 
-from SplatDate import SplatDate
+from SplatCalendar import SplatDate, today_holiday_cause
 
 SplatBot = discord.Client()  # nom du bot
-
-FERIE_DATE = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]]  # tableau des jours fériés
-FERIE_CAUSE = ['Le Splat', 'Hell-a-J', 'Hell-a-J']  # Tableau des noms des jours fériés
-
-
-def est_ferie():
-    year, month, day, *_ = time.localtime()
-    today_splat_date = SplatDate(year, month, day)
-    for i in range(len(FERIE_DATE)):
-        if (today_splat_date.month == FERIE_DATE[i][1] and today_splat_date.day == FERIE_DATE[3]):
-            return (True, i)
-        else:
-            return (False, -1)
 
 
 @SplatBot.event
@@ -40,9 +29,9 @@ async def on_message(message):
                                     "Nous sommes le {}".format(today_splat_date.formatted_date()))
 
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
-        a = est_ferie()
-        if a[0]:
-            await SplatBot.send_message(message.channel, "C'est un jour férié : {}".format(FERIE_CAUSE[a[1]]))
+        holiday_cause = today_holiday_cause()
+        if holiday_cause:
+            await SplatBot.send_message(message.channel, "C'est un jour férié : {}".format(holiday_cause))
         else:
             await SplatBot.send_message(message.channel, "Ce n'est pas un jour férié")
 
