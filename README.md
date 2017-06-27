@@ -3,7 +3,7 @@ SplatBot
 
 Un bot Discord qui détermine la date selon le calendrier du Splat
 
-## Usage
+## Usage
 
 Commandes disponibles :
   - !splat
