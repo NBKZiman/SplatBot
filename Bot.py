@@ -11,12 +11,23 @@ from SplatCalendar import SplatDate, today_holiday_cause, holiday_cause
 splat_bot = discord.Client()  # nom du bot
 
 
-def assert_date(year, month, day):  # une fonction qui vérifie que les dates donné en argument sont bien valide
+def assert_date(year, month, day) -> bool:
+    """Vérifie que les dates données en arguments sont bien valides, renvoi un booleen"""
     if (type(year) is int) and (type(month) is int) and (type(day) is int):
         if (0 < month < 13) and (0 < day < 32):
             return True
     return False
 
+
+def assert_bite(cmd, number_option) -> bool:
+    """Emmpêche les utilisateur de !bite de mettre trop de ligne, renvoi False si il y a plus de 10
+    ligne et/ou 25 aubergine"""
+    if number_option > 1:
+        if int(cmd[1]) >= 25:
+            return True
+    if number_option > 2:
+        if (int(cmd[2]) >= 10 and int(cmd[1]) >= 25):
+            return True
 
 @splat_bot.event
 async def on_ready():
@@ -114,12 +125,8 @@ async def on_message(message):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
 
     if message.content.startswith('!bite'):
-        if number_option > 1:
-            if int(cmd[1]) >= 25:
-                number_option = 1
-        if number_option > 2:
-            if (int(cmd[2]) >= 10 and int(cmd[1]) >= 25):
-                number_option = 1
+        if assert_bite(cmd, number_option) :
+            number_option = 1
         if number_option == 1:
             await splat_bot.send_message(message.channel,
                                          ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:" 
@@ -139,6 +146,8 @@ async def on_message(message):
                 str_long = str_long + egg
             for i in range(int(cmd[2])):
                 await splat_bot.send_message(message.channel, str_long)
+
+    
 
 
 splat_bot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDP9MA.f9te3zjYCT-KM1Sg0xq-Izdj3dM')
