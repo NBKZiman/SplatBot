@@ -1,115 +1,73 @@
-import discord
+#!/usr/bin/env python
+# coding: utf-8
 import asyncio
-import time
 import random
+import time
 
-SplatBot = discord.Client() # nom du bot
+import discord
 
-def SplatDate(annee,mois,jour):
-    '''Fonction qui convertit une date classique en date splatonique'''
-    annee = 0
-    if mois == 3 :
-        if jour >= 27 :
-            Smois = 'Givier'
-            Sjour = jour - 27 + 1
-    if mois == 4 :
-        if jour < 29 :
-            Smois = 'Givier'
-            Sjour = jour + 5
-        else :
-            Smois = 'Fevrilyo'
-            Sjour = jour - 29 + 1
-    if mois == 5 :
-        if jour < 14 :
-            Smois = 'Fevrilyo'
-            Sjour = jour + 2
-        else :
-            Smois = 'Maikkar'
-            Sjour = jour - 15 + 1
-    if  mois == 6 :
-        if jour < 23 :
-            Smois = 'Markkos'
-            Sjour = jour + 18 - 1
-        else :
-            Smois = 'Avrylocus'
-            Sjour = jour -24
-    return (annee, Smois, Sjour)
+from SplatCalendar import SplatDate, today_holiday_cause
 
-FerieDate = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]] #tableau des jours fériés
-FerieCause = ['Le Splat', 'Hell-a-J', 'Hell-a-J'] # Tableau des noms des jours fériés
-
-def estFerie():
-    year = time.localtime()[0]
-    month = time.localtime()[1]
-    day = time.localtime()[2]
-    Splat = SplatDate(year, month, day)
-    for i in range (len(FerieDate)):
-        if (Splat[1]==FerieDate[i][1] and Splat[2]==FerieDate[3]):
-            return (True, i)
-        else :
-            return (False, -1)
+splat_bot = discord.Client()  # nom du bot
 
 
-@SplatBot.event
+@splat_bot.event
 async def on_ready():
-    '''Indique que le bot est connecté'''
+    """Indique que le bot est connecté"""
     print('Logged in as')
-    print(SplatBot.user.name)
-    print(SplatBot.user.id)
+    print(splat_bot.user.name)
+    print(splat_bot.user.id)
     print('------')
 
-@SplatBot.event
-async def on_message(message):
-    '''Definit les reactions aux messages des utilisateurs'''
-    if message.content.startswith('!splat'): # reaction à !splat
-        year = time.localtime()[0]
-        month = time.localtime()[1]
-        day = time.localtime()[2]
-        Splat = SplatDate(year, month,day) # conversion en date splatonique
-        if Splat[2] ==  1:
-            await SplatBot.send_message(message.channel, 'Nous sommes le ' + str(Splat[2]) + 'er ' + str(Splat[1]) + ' de l\'an ' + str(Splat[0])) # affichage du message
-        else :
-            await SplatBot.send_message(message.channel,'Nous sommes le ' + str(Splat[2]) + ' ' + str(Splat[1]) + ' de l\'an ' + str(Splat[0]))
 
-    if message.content.startswith('!Feriés'): # réaction à !Feriés
-        a = estFerie()
-        if a[0]==True :
-             await SplatBot.send_message(message.channel, 'C\'est un jour férié : ' + FerieCause[a[1]])
-        else :
-            await SplatBot.send_message(message.channel, 'Ce n\'est pas un jour férié')
+@splat_bot.event
+async def on_message(message):
+    """Definit les reactions aux messages des utilisateurs"""
+    if message.content.startswith('!splat'):  # reaction à !splat
+        year, month, day, *_ = time.localtime()
+        today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
+        await splat_bot.send_message(message.channel,
+                                     "Nous sommes le {}".format(today_splat_date.formatted_date()))
+
+    if message.content.startswith('!Feriés'):  # réaction à !Feriés
+        holiday_cause = today_holiday_cause()
+        if holiday_cause:
+            await splat_bot.send_message(message.channel, "C'est un jour férié : {}".format(holiday_cause))
+        else:
+            await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
-        await SplatBot.send_message(message.channel, 'Version 0.1.2')
+        await splat_bot.send_message(message.channel, 'Version 0.1.2')
 
     if message.content.startswith('!help'):
-        await SplatBot.send_message(message.channel, 'Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1\', !quiEstCe?, !perdu !version, !gitHub et !theGame')
+        await splat_bot.send_message(message.channel,
+                                     "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
 
     if message.content.startswith('!seconde'):
-        t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
-        a = time.mktime(time.localtime()) - time.mktime(t)
-        await SplatBot.send_message(message.channel, 'Il s\'est écoulé ' + str(a) + ' secondes depuis le Splat')
+        await splat_bot.send_message(message.channel,
+                                     "Il s'est écoulé {} secondes depuis le Splat".format(
+                                         SplatDate.seconds_since_splat()))
 
-    if message.content.startswith('!estCeQueJeDoisFaireG1\''):
-        await SplatBot.send_message(message.channel, 'oui')
+    if message.content.startswith("!estCeQueJeDoisFaireG1'"):
+        await splat_bot.send_message(message.channel, 'oui')
 
     if message.content.startswith('!quiEstCe?'):
-        await SplatBot.send_message(message.channel, 'C\'est moi !! Le Splat Bot')
+        await splat_bot.send_message(message.channel, "C'est moi !! Le Splat Bot")
 
     if message.content.startswith('!perdu'):
-        await SplatBot.send_message(message.channel, 'J\'ai perdu')
+        await splat_bot.send_message(message.channel, "J'ai perdu")
 
     if message.content.startswith('!ping'):
-        await SplatBot.send_message(message.channel, 'Pong')
+        await splat_bot.send_message(message.channel, 'Pong')
 
     if message.content.startswith('!theGame'):
-        for i in range(3):
-            tempsAleatoire = random.randint(1, 120)
-            time.sleep(tempsAleatoire)
-            await SplatBot.send_message(message.channel, 'Perdu @sn00c#3984')
+        for _ in range(3):
+            temps_aleatoire = random.randint(1, 120)
+            await asyncio.sleep(temps_aleatoire)
+            await splat_bot.send_message(message.channel, 'Perdu @sn00c#3984')
 
     if message.content.startswith('!gitHub'):
-        await SplatBot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
+        await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
 
 
-
-SplatBot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDG-uA.DhcrdS94C2WaZVvLkqOVHV8__O4')
+splat_bot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDG-uA.DhcrdS94C2WaZVvLkqOVHV8__O4')
