@@ -6,35 +6,35 @@ import random
 SplatBot = discord.Client()  # nom du bot
 
 
-def SplatDate(annee, mois, jour):
-    """Fonction qui convertit une date classique en date splatonique"""
-    annee = 0
-    if mois == 3:
-        if jour >= 27:
-            Smois = 'Givier'
-            Sjour = jour - 27 + 1
-    if mois == 4:
-        if jour < 29:
-            Smois = 'Givier'
-            Sjour = jour + 5
-        else:
-            Smois = 'Fevrilyo'
-            Sjour = jour - 29 + 1
-    if mois == 5:
-        if jour < 14:
-            Smois = 'Fevrilyo'
-            Sjour = jour + 2
-        else:
-            Smois = 'Maikkar'
-            Sjour = jour - 15 + 1
-    if mois == 6:
-        if jour < 23:
-            Smois = 'Markkos'
-            Sjour = jour + 18 - 1
-        else:
-            Smois = 'Avrylocus'
-            Sjour = jour - 24
-    return (annee, Smois, Sjour)
+class SplatDate:
+    """Classe qui convertit une date classique en date splatonique"""
+    def __init__(self, year, month, day):
+        self.year = 0
+        if month == 3:
+            if day >= 27:
+                self.month = 'Givier'
+                self.day = day - 27 + 1
+        if month == 4:
+            if day < 29:
+                self.month = 'Givier'
+                self.day = day + 5
+            else:
+                self.month = 'Fevrilyo'
+                self.day = day - 29 + 1
+        if month == 5:
+            if day < 14:
+                self.month = 'Fevrilyo'
+                self.day = day + 2
+            else:
+                self.month = 'Maikkar'
+                self.day = day - 15 + 1
+        if month == 6:
+            if day < 23:
+                self.month = 'Markkos'
+                self.day = day + 18 - 1
+            else:
+                self.month = 'Avrylocus'
+                self.day = day - 24
 
 
 FerieDate = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]]  # tableau des jours fériés
@@ -45,9 +45,9 @@ def estFerie():
     year = time.localtime()[0]
     month = time.localtime()[1]
     day = time.localtime()[2]
-    Splat = SplatDate(year, month, day)
+    splat_date = SplatDate(year, month, day)
     for i in range(len(FerieDate)):
-        if (Splat[1] == FerieDate[i][1] and Splat[2] == FerieDate[3]):
+        if (splat_date.month == FerieDate[i][1] and splat_date.day == FerieDate[3]):
             return (True, i)
         else:
             return (False, -1)
@@ -69,15 +69,15 @@ async def on_message(message):
         year = time.localtime()[0]
         month = time.localtime()[1]
         day = time.localtime()[2]
-        Splat = SplatDate(year, month, day)  # conversion en date splatonique
-        if Splat[2] == 1:
+        splat_date = SplatDate(year, month, day)  # conversion en date splatonique
+        if splat_date.day == 1:
             await SplatBot.send_message(message.channel,
-                                        'Nous sommes le ' + str(Splat[2]) + 'er ' + str(Splat[1]) + ' de l\'an ' + str(
-                                            Splat[0]))  # affichage du message
+                                        'Nous sommes le ' + str(splat_date.day) + 'er ' + str(splat_date.month) + ' de l\'an ' + str(
+                                            splat_date.year))  # affichage du message
         else:
             await SplatBot.send_message(message.channel,
-                                        'Nous sommes le ' + str(Splat[2]) + ' ' + str(Splat[1]) + ' de l\'an ' + str(
-                                            Splat[0]))
+                                        'Nous sommes le ' + str(splat_date.day) + ' ' + str(splat_date.month) + ' de l\'an ' + str(
+                                            splat_date.year))
 
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
         a = estFerie()
