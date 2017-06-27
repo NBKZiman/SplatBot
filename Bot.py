@@ -37,17 +37,17 @@ class SplatDate:
                 self.day = day - 24
 
 
-FerieDate = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]]  # tableau des jours fériés
-FerieCause = ['Le Splat', 'Hell-a-J', 'Hell-a-J']  # Tableau des noms des jours fériés
+FERIE_DATE = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]]  # tableau des jours fériés
+FERIE_CAUSE = ['Le Splat', 'Hell-a-J', 'Hell-a-J']  # Tableau des noms des jours fériés
 
 
-def estFerie():
+def est_ferie():
     year = time.localtime()[0]
     month = time.localtime()[1]
     day = time.localtime()[2]
-    splat_date = SplatDate(year, month, day)
-    for i in range(len(FerieDate)):
-        if (splat_date.month == FerieDate[i][1] and splat_date.day == FerieDate[3]):
+    today_splat_date = SplatDate(year, month, day)
+    for i in range(len(FERIE_DATE)):
+        if (today_splat_date.month == FERIE_DATE[i][1] and today_splat_date.day == FERIE_DATE[3]):
             return (True, i)
         else:
             return (False, -1)
@@ -69,20 +69,20 @@ async def on_message(message):
         year = time.localtime()[0]
         month = time.localtime()[1]
         day = time.localtime()[2]
-        splat_date = SplatDate(year, month, day)  # conversion en date splatonique
-        if splat_date.day == 1:
+        today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
+        if today_splat_date.day == 1:
             await SplatBot.send_message(message.channel,
-                                        'Nous sommes le ' + str(splat_date.day) + 'er ' + str(splat_date.month) + ' de l\'an ' + str(
-                                            splat_date.year))  # affichage du message
+                                        'Nous sommes le ' + str(today_splat_date.day) + 'er ' + str(today_splat_date.month) + ' de l\'an ' + str(
+                                            today_splat_date.year))  # affichage du message
         else:
             await SplatBot.send_message(message.channel,
-                                        'Nous sommes le ' + str(splat_date.day) + ' ' + str(splat_date.month) + ' de l\'an ' + str(
-                                            splat_date.year))
+                                        'Nous sommes le ' + str(today_splat_date.day) + ' ' + str(today_splat_date.month) + ' de l\'an ' + str(
+                                            today_splat_date.year))
 
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
-        a = estFerie()
+        a = est_ferie()
         if a[0]:
-            await SplatBot.send_message(message.channel, 'C\'est un jour férié : ' + FerieCause[a[1]])
+            await SplatBot.send_message(message.channel, 'C\'est un jour férié : ' + FERIE_CAUSE[a[1]])
         else:
             await SplatBot.send_message(message.channel, 'Ce n\'est pas un jour férié')
 
@@ -112,8 +112,8 @@ async def on_message(message):
 
     if message.content.startswith('!theGame'):
         for i in range(3):
-            tempsAleatoire = random.randint(1, 120)
-            time.sleep(tempsAleatoire)
+            temps_aleatoire = random.randint(1, 120)
+            time.sleep(temps_aleatoire)
             await SplatBot.send_message(message.channel, 'Perdu @sn00c#3984')
 
     if message.content.startswith('!gitHub'):
