@@ -11,7 +11,7 @@ from SplatCalendar import SplatDate, today_holiday_cause, holiday_cause
 splat_bot = discord.Client()  # nom du bot
 
 
-def assert_date(year, month, day) -> bool:
+def assert_date(year: int, month: int, day: int) -> bool:
     """Vérifie que les dates données en arguments sont bien valides, renvoi un booleen"""
     if (type(year) is int) and (type(month) is int) and (type(day) is int):
         if (0 < month < 13) and (0 < day < 32):
@@ -19,15 +19,16 @@ def assert_date(year, month, day) -> bool:
     return False
 
 
-def assert_bite(cmd, number_option) -> bool:
-    """Emmpêche les utilisateur de !bite de mettre trop de ligne, renvoi False si il y a plus de 10
+def assert_bite(cmd, number_option: int) -> bool:
+    """Emmpèche les utilisateurs de !bite de mettre trop de lignes, renvoi True si il y a plus de 10
     ligne et/ou 25 aubergine"""
     if number_option > 1:
         if int(cmd[1]) >= 25:
             return True
     if number_option > 2:
-        if (int(cmd[2]) >= 10 and int(cmd[1]) >= 25):
+        if int(cmd[2]) >= 10 and int(cmd[1]) >= 25:
             return True
+
 
 @splat_bot.event
 async def on_ready():
@@ -56,8 +57,8 @@ async def on_message(message):
         elif number_option == 4:
             year_option, month_option, day_option = int(cmd[3]), int(cmd[2]), int(cmd[1])
             if not assert_date(year_option, month_option, day_option):
-                 await splat_bot.send_message(message.channel,
-                                              "Go fuck yourself")
+                await splat_bot.send_message(message.channel,
+                                             "Go fuck yourself")
             else:
                 date_option = (year_option, month_option, day_option, 0, 0, 0, 1, 76, 1)
                 futur = (time.mktime(time.localtime()) - time.mktime(date_option) < 0)  # on veut savoir si la date
@@ -125,7 +126,7 @@ async def on_message(message):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
 
     if message.content.startswith('!bite'):
-        if assert_bite(cmd, number_option) :
+        if assert_bite(cmd, number_option):
             number_option = 1
         if number_option == 1:
             await splat_bot.send_message(message.channel,
@@ -136,18 +137,15 @@ async def on_message(message):
         if number_option == 2:
             egg = ':eggplant: '
             str_long = ' '
-            for i in range(int(cmd[1])):
+            for _ in range(int(cmd[1])):
                 str_long = str_long + egg
             await splat_bot.send_message(message.channel, str_long)
         if number_option == 3:
             egg = ':eggplant: '
             str_long = ' '
-            for i in range(int(cmd[1])):
+            for _ in range(int(cmd[1])):
                 str_long = str_long + egg
-            for i in range(int(cmd[2])):
+            for _ in range(int(cmd[2])):
                 await splat_bot.send_message(message.channel, str_long)
-
-    
-
 
 splat_bot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDP9MA.f9te3zjYCT-KM1Sg0xq-Izdj3dM')
