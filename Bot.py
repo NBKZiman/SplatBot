@@ -40,6 +40,11 @@ class SplatDate:
         suffix = "er" if self.day == 1 else ""
         return "{day}{suffix} {month} de l'an {year}".format(day=self.day, suffix=suffix, month=self.month, year=self.year)
 
+    @staticmethod
+    def seconds_since_splat():
+        t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
+        return time.mktime(time.localtime()) - time.mktime(t)
+
 
 FERIE_DATE = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]]  # tableau des jours fériés
 FERIE_CAUSE = ['Le Splat', 'Hell-a-J', 'Hell-a-J']  # Tableau des noms des jours fériés
@@ -92,9 +97,8 @@ async def on_message(message):
                                     "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
 
     if message.content.startswith('!seconde'):
-        t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
-        a = time.mktime(time.localtime()) - time.mktime(t)
-        await SplatBot.send_message(message.channel, "Il s'est écoulé {} secondes depuis le Splat".format(a))
+        await SplatBot.send_message(message.channel,
+                                    "Il s'est écoulé {} secondes depuis le Splat".format(SplatDate.seconds_since_splat()))
 
     if message.content.startswith("!estCeQueJeDoisFaireG1'"):
         await SplatBot.send_message(message.channel, 'oui')
