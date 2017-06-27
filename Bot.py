@@ -6,7 +6,7 @@ import random
 SplatBot = discord.Client() # nom du bot
 
 def SplatDate(annee,mois,jour):
-    '''Fonction qui convertie une date classique en date splatonique'''
+    '''Fonction qui convertit une date classique en date splatonique'''
     annee = 0
     if mois == 3 :
         if jour >= 27 :
@@ -35,8 +35,8 @@ def SplatDate(annee,mois,jour):
             Sjour = jour -24
     return (annee, Smois, Sjour)
 
-FerieDate = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]] #tableau des jours feries
-FerieCause = ['Le Splat', 'Hell-a-J', 'Hell-a-J'] # Tableau des noms des jours feries
+FerieDate = [['Gvrier', 1], ['Gevrier', 1], ['Gevrier', 2]] #tableau des jours fériés
+FerieCause = ['Le Splat', 'Hell-a-J', 'Hell-a-J'] # Tableau des noms des jours fériés
 
 def estFerie():
     year = time.localtime()[0]
@@ -52,7 +52,7 @@ def estFerie():
 
 @SplatBot.event
 async def on_ready():
-    '''Indique que le bot est connecte'''
+    '''Indique que le bot est connecté'''
     print('Logged in as')
     print(SplatBot.user.name)
     print(SplatBot.user.id)
@@ -60,8 +60,8 @@ async def on_ready():
 
 @SplatBot.event
 async def on_message(message):
-    '''definie les reactions aux messages des utilistateurs'''
-    if message.content.startswith('!splat'): # reaction a !splat
+    '''Definit les reactions aux messages des utilisateurs'''
+    if message.content.startswith('!splat'): # reaction à !splat
         year = time.localtime()[0]
         month = time.localtime()[1]
         day = time.localtime()[2]
@@ -71,12 +71,12 @@ async def on_message(message):
         else :
             await SplatBot.send_message(message.channel,'Nous sommes le ' + str(Splat[2]) + ' ' + str(Splat[1]) + ' de l\'an ' + str(Splat[0]))
 
-    if message.content.startswith('!Feriés'): # réaction a !ferie
+    if message.content.startswith('!Feriés'): # réaction à !Feriés
         a = estFerie()
         if a[0]==True :
-             await SplatBot.send_message(message.channel, 'C\'est un jour ferié : ' + FerieCause[a[1]])
+             await SplatBot.send_message(message.channel, 'C\'est un jour férié : ' + FerieCause[a[1]])
         else :
-            await SplatBot.send_message(message.channel, 'Ce n\'est pas un jour ferié')
+            await SplatBot.send_message(message.channel, 'Ce n\'est pas un jour férié')
 
     if message.content.startswith('!version'):
         await SplatBot.send_message(message.channel, 'Version 0.1.2')
@@ -87,7 +87,7 @@ async def on_message(message):
     if message.content.startswith('!seconde'):
         t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
         a = time.mktime(time.localtime()) - time.mktime(t)
-        await SplatBot.send_message(message.channel, 'il s\'est écoulé ' + str(a) + ' secondes depuis le Splat')
+        await SplatBot.send_message(message.channel, 'Il s\'est écoulé ' + str(a) + ' secondes depuis le Splat')
 
     if message.content.startswith('!estCeQueJeDoisFaireG1\''):
         await SplatBot.send_message(message.channel, 'oui')
