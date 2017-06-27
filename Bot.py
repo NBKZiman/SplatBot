@@ -27,7 +27,7 @@ async def on_message(message):
         year, month, day, *_ = time.localtime()
         today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
         await splat_bot.send_message(message.channel,
-                                    "Nous sommes le {}".format(today_splat_date.formatted_date()))
+                                     "Nous sommes le {}".format(today_splat_date.formatted_date()))
 
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
         holiday_cause = today_holiday_cause()
@@ -41,12 +41,12 @@ async def on_message(message):
 
     if message.content.startswith('!help'):
         await splat_bot.send_message(message.channel,
-                                    "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
+                                     "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
 
     if message.content.startswith('!seconde'):
         await splat_bot.send_message(message.channel,
-                                    "Il s'est écoulé {} secondes depuis le Splat".format(
-                                        SplatDate.seconds_since_splat()))
+                                     "Il s'est écoulé {} secondes depuis le Splat".format(
+                                         SplatDate.seconds_since_splat()))
 
     if message.content.startswith("!estCeQueJeDoisFaireG1'"):
         await splat_bot.send_message(message.channel, 'oui')
