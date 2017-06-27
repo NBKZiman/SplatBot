@@ -13,7 +13,7 @@ splat_bot = discord.Client()  # nom du bot
 
 def assert_date(year, month, day):  # une fonction qui vérifie que les dates donné en argument sont bien valide
     if (type(year) is int) and (type(month) is int) and (type(day) is int):
-        if (month > 0 and month < 13) and (day > 0 and day < 32):
+        if (0 < month < 13) and (0 < day < 32):
             return True
     return False
 
@@ -39,12 +39,12 @@ async def on_message(message):
         year, month, day, *_ = time.localtime()
         today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
 
-        if (message.content == '!splat'):
+        if message.content == '!splat':
             await splat_bot.send_message(message.channel,
                                          "Nous sommes le {}".format(today_splat_date.formatted_date()))
         elif number_option == 4:
             year_option, month_option, day_option = int(cmd[3]), int(cmd[2]), int(cmd[1])
-            if not assert_date(year_option, month_option, day_option) :
+            if not assert_date(year_option, month_option, day_option):
                  await splat_bot.send_message(message.channel,
                                               "Go fuck yourself")
             else:
@@ -58,7 +58,7 @@ async def on_message(message):
                 else:
                     splat_date_option = SplatDate(year_option, month_option, day_option)
                     await splat_bot.send_message(message.channel,
-                                             "Nous étions le {}".format(splat_date_option.formatted_date()))
+                                                 "Nous étions le {}".format(splat_date_option.formatted_date()))
 
     if message.content.startswith('!férié'):  # réaction à !Feriés
         if message.content == '!férié':
@@ -71,7 +71,7 @@ async def on_message(message):
             year_option, month_option, day_option = int(cmd[3]), int(cmd[2]), int(cmd[1])
             if not assert_date(year_option, month_option, day_option):
                 await splat_bot.send_message(message.channel,
-                                            "Go fuck yourself")
+                                             "Go fuck yourself")
             else:
                 holiday_cause_is = holiday_cause(int(cmd[3]), int(cmd[2]), int(cmd[1]))
                 if holiday_cause_is:
@@ -82,11 +82,10 @@ async def on_message(message):
     if message.content.startswith('!version'):
         await splat_bot.send_message(message.channel, 'Version 1.0.0')
 
-
     if message.content.startswith('!help'):
         await splat_bot.send_message(message.channel,
-                                     "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
-
+                                     "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, "
+                                     "!estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
 
     if message.content.startswith('!seconde'):
         await splat_bot.send_message(message.channel,
@@ -113,6 +112,33 @@ async def on_message(message):
 
     if message.content.startswith('!gitHub'):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
+
+    if message.content.startswith('!bite'):
+        if number_option > 1:
+            if int(cmd[1]) >= 25:
+                number_option = 1
+        if number_option > 2:
+            if (int(cmd[2]) >= 10 and int(cmd[1]) >= 25):
+                number_option = 1
+        if number_option == 1:
+            await splat_bot.send_message(message.channel,
+                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:" 
+                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:" 
+                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:")
+
+        if number_option == 2:
+            egg = ':eggplant: '
+            str_long = ' '
+            for i in range(int(cmd[1])):
+                str_long = str_long + egg
+            await splat_bot.send_message(message.channel, str_long)
+        if number_option == 3:
+            egg = ':eggplant: '
+            str_long = ' '
+            for i in range(int(cmd[1])):
+                str_long = str_long + egg
+            for i in range(int(cmd[2])):
+                await splat_bot.send_message(message.channel, str_long)
 
 
 splat_bot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDP9MA.f9te3zjYCT-KM1Sg0xq-Izdj3dM')
