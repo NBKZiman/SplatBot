@@ -6,7 +6,8 @@ import time
 
 import discord
 
-from SplatCalendar import SplatDate, today_holiday_cause, holiday_cause
+from SplatCalendar import *
+from QuoiMangay import *
 
 splat_bot = discord.Client()  # nom du bot
 
@@ -147,5 +148,31 @@ async def on_message(message):
                 str_long = str_long + egg
             for _ in range(int(cmd[2])):
                 await splat_bot.send_message(message.channel, str_long)
+
+    if message.content.startswith('!mangay'):
+        assert number_option <= 3
+        if number_option == 1:
+            list_mangay = choix_Mangay(' ')
+        elif number_option >= 2:
+            if cmd[1] == 'help':
+                await splat_bot.send_message(message.channel,
+                                             "!mangay [catégorie] [hasard]. Le bot affiche la liste des lieux où l'on"
+                                             " peut manger selon la catégorie choisie, si il n'y a pas de catégorie le "
+                                             "bot affiche toute les possibilités. On peut ajouter l'option hasard "
+                                             "pour tirer le lieu au hasard. Les catégorie sont :\n - fastfood\n -"
+                                             " burger\n - commande \n - gluten-free\n - cher (qui n'est pas forcément "
+                                             "cher mais il faut se déplacer pour y aller\n")
+                list_mangay = ['Do it again']
+            else:
+                list_mangay = choix_Mangay(cmd[1])
+        if list_mangay == []:
+            await splat_bot.send_message(message.channel,
+                                         "La catégorie est mauvaise tapez !mangay help pour plus d'info.")
+        elif number_option <= 2:
+                for i in list_mangay:
+                    await splat_bot.send_message(message.channel, i)
+        elif cmd[2] == 'hasard':
+            random.shuffle(list_mangay)
+            await splat_bot.send_message(message.channel, list_mangay[0])
 
 splat_bot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDP9MA.f9te3zjYCT-KM1Sg0xq-Izdj3dM')
