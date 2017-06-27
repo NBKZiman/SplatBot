@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 import time
+from typing import Optional
 
 HOLIDAYS = [
     {
@@ -52,18 +53,18 @@ class SplatDate:
                 self.month = 'Avrylocus'
                 self.day = day - 24
 
-    def formatted_date(self):
+    def formatted_date(self) -> str:
         suffix = "er" if self.day == 1 else ""
         return "{day}{suffix} {month} de l'an {year}".format(day=self.day, suffix=suffix, month=self.month,
                                                              year=self.year)
 
     @staticmethod
-    def seconds_since_splat():
+    def seconds_since_splat() -> float:
         t = (2017, 3, 27, 0, 0, 0, 1, 76, 1)
         return time.mktime(time.localtime()) - time.mktime(t)
 
 
-def today_holiday_cause():
+def today_holiday_cause() -> Optional[str]:
     year, month, day, *_ = time.localtime()
     today_splat_date = SplatDate(year, month, day)
     matching_holiday = list(
