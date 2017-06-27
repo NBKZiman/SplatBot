@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+import asyncio
 import random
 import time
 
@@ -62,7 +63,7 @@ async def on_message(message):
     if message.content.startswith('!theGame'):
         for _ in range(3):
             temps_aleatoire = random.randint(1, 120)
-            time.sleep(temps_aleatoire)
+            await asyncio.sleep(temps_aleatoire)
             await splat_bot.send_message(message.channel, 'Perdu @sn00c#3984')
 
     if message.content.startswith('!gitHub'):
