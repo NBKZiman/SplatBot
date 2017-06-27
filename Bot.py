@@ -7,7 +7,7 @@ SplatBot = discord.Client()  # nom du bot
 
 
 def SplatDate(annee, mois, jour):
-    '''Fonction qui convertit une date classique en date splatonique'''
+    """Fonction qui convertit une date classique en date splatonique"""
     annee = 0
     if mois == 3:
         if jour >= 27:
@@ -55,7 +55,7 @@ def estFerie():
 
 @SplatBot.event
 async def on_ready():
-    '''Indique que le bot est connecté'''
+    """Indique que le bot est connecté"""
     print('Logged in as')
     print(SplatBot.user.name)
     print(SplatBot.user.id)
@@ -64,7 +64,7 @@ async def on_ready():
 
 @SplatBot.event
 async def on_message(message):
-    '''Definit les reactions aux messages des utilisateurs'''
+    """Definit les reactions aux messages des utilisateurs"""
     if message.content.startswith('!splat'):  # reaction à !splat
         year = time.localtime()[0]
         month = time.localtime()[1]
@@ -81,7 +81,7 @@ async def on_message(message):
 
     if message.content.startswith('!Feriés'):  # réaction à !Feriés
         a = estFerie()
-        if a[0] == True:
+        if a[0]:
             await SplatBot.send_message(message.channel, 'C\'est un jour férié : ' + FerieCause[a[1]])
         else:
             await SplatBot.send_message(message.channel, 'Ce n\'est pas un jour férié')
