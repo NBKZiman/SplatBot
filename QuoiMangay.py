@@ -40,8 +40,13 @@ LIEUX = [
         'nom': 'BK',
         'type': ['burger', 'fastfood', 'cher', '  ']
     },
+    {
         'nom': 'Kebab',
-        'type'; ['commande', ' ']
+        'type': ['commande', ' ']
+    },
+    {
+        'nom': 'Big Fernand',
+        'type': ['burger', 'cher', ' ']
     }
 ]
 

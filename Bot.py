@@ -84,7 +84,7 @@ async def on_message(message):
             year_option, month_option, day_option = int(cmd[3]), int(cmd[2]), int(cmd[1])
             if not assert_date(year_option, month_option, day_option):
                 await splat_bot.send_message(message.channel,
-                                             "Go fuck yourself")
+                                             "Go splat yourself")
             else:
                 holiday_cause_is = holiday_cause(int(cmd[3]), int(cmd[2]), int(cmd[1]))
                 if holiday_cause_is:
@@ -93,19 +93,23 @@ async def on_message(message):
                     await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
+        if number_option >= 2:
+            if cmd[1] == 'help':
+
         await splat_bot.send_message(message.channel, 'Version 1.0.0')
 
     if message.content.startswith('!help'):
         await splat_bot.send_message(message.channel,
                                      "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, "
-                                     "!estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame")
+                                     "!estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame. Tapez "
+                                     "!help <commande> pour avoir plus d'infos sur une commande")
 
     if message.content.startswith('!seconde'):
         await splat_bot.send_message(message.channel,
                                      "Il s'est écoulé {} secondes depuis le Splat".format(
                                          SplatDate.seconds_since_splat()))
 
-    if message.content.startswith("!estCeQueJeDoisFaireG1'"):
+    if message.content.startswith("!estCeQueJeVaisFaireG1'"):
         await splat_bot.send_message(message.channel, 'oui')
 
     if message.content.startswith('!quiEstCe?'):
@@ -123,7 +127,7 @@ async def on_message(message):
             await asyncio.sleep(temps_aleatoire)
             await splat_bot.send_message(message.channel, 'Perdu')
 
-    if message.content.startswith('!gitHub'):
+    if message.content.startswith('!perdu'):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
 
     if message.content.startswith('!bite'):
@@ -158,10 +162,10 @@ async def on_message(message):
                 await splat_bot.send_message(message.channel,
                                              "!mangay [catégorie] [hasard]. Le bot affiche la liste des lieux où l'on"
                                              " peut manger selon la catégorie choisie, si il n'y a pas de catégorie le "
-                                             "bot affiche toute les possibilités. On peut ajouter l'option hasard "
-                                             "pour tirer le lieu au hasard. Les catégorie sont :\n - fastfood\n -"
+                                             "bot affiche toutes les possibilités. On peut ajouter l'option hasard "
+                                             "pour tirer le lieu au hasard. Les catégories sont :\n - fastfood\n -"
                                              " burger\n - commande \n - gluten-free\n - cher (qui n'est pas forcément "
-                                             "cher mais il faut se déplacer pour y aller\n")
+                                             "cher mais il faut se déplacer pour y aller)")
                 list_mangay = ['Do it again']
             else:
                 list_mangay = choix_Mangay(cmd[1])
