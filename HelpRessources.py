@@ -10,7 +10,7 @@ help_dict['help_mangay'] = "!mangay [catégorie] [hasard]. Le bot affiche la lis
                            "fastfood\n - burger\n - commande \n - gluten-free\n - cher (qui n'est pas forcément cher " \
                            "mais il faut se déplacer pour y aller)"
 
-help_dict['help_help'] = "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1'" \
+help_dict['help_!help'] = "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1'" \
                          ", !quiEstCe?,! perdu !version, !gitHub et !theGame. Tapez !help <commande> pour avoir plus" \
                          " d'infos sur une commande (sans le !)."
 
@@ -38,7 +38,7 @@ help_dict['help_perdu'] = "Fais perdre le bot"
 
 help_dict['help_gitHub'] = "Affiche le github du bot, vous pouvez venir aider à sa conception si vous le voulez"
 
-help_dict['help_theGame'] = "Trois perdus sont envoyés sur le chan à des moments aléatoires après l'émissions de la " \
+help_dict['help_theGame'] = "Trois perdus sont envoyés sur le chan à des moments aléatoires après l'émission de la " \
                             "commande. "
 
 

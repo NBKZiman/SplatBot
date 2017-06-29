@@ -8,6 +8,7 @@ import discord
 
 from SplatCalendar import *
 from QuoiMangay import *
+from HelpRessources import *
 
 splat_bot = discord.Client()  # nom du bot
 
@@ -93,16 +94,14 @@ async def on_message(message):
                     await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
-        if number_option >= 2:
-            if cmd[1] == 'help':
-
         await splat_bot.send_message(message.channel, 'Version 1.0.0')
 
     if message.content.startswith('!help'):
-        await splat_bot.send_message(message.channel,
-                                     "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, "
-                                     "!estCeQueJeDoisFaireG1', !quiEstCe?, !perdu !version, !gitHub et !theGame. Tapez "
-                                     "!help <commande> pour avoir plus d'infos sur une commande")
+        if number_option == 1:
+            await splat_bot.send_message(message.channel, get_help('!help'))
+        else:
+            await splat_bot.send_message(message.channel, get_help(cmd[1]))
+
 
     if message.content.startswith('!seconde'):
         await splat_bot.send_message(message.channel,
@@ -158,16 +157,6 @@ async def on_message(message):
         if number_option == 1:
             list_mangay = choix_Mangay(' ')
         elif number_option >= 2:
-            if cmd[1] == 'help':
-                await splat_bot.send_message(message.channel,
-                                             "!mangay [catégorie] [hasard]. Le bot affiche la liste des lieux où l'on"
-                                             " peut manger selon la catégorie choisie, si il n'y a pas de catégorie le "
-                                             "bot affiche toutes les possibilités. On peut ajouter l'option hasard "
-                                             "pour tirer le lieu au hasard. Les catégories sont :\n - fastfood\n -"
-                                             " burger\n - commande \n - gluten-free\n - cher (qui n'est pas forcément "
-                                             "cher mais il faut se déplacer pour y aller)")
-                list_mangay = ['Do it again']
-            else:
                 list_mangay = choix_Mangay(cmd[1])
         if list_mangay == []:
             await splat_bot.send_message(message.channel,
