@@ -28,7 +28,7 @@ def assert_bite(cmd, number_option: int) -> bool:
         if int(cmd[1]) >= 25:
             return True
     if number_option > 2:
-        if int(cmd[2]) >= 10 and int(cmd[1]) >= 25:
+        if int(cmd[2]) >= 25 and int(cmd[1]) >= 10:
             return True
 
 
@@ -94,7 +94,7 @@ async def on_message(message):
                     await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
-        await splat_bot.send_message(message.channel, 'Version 1.0.0')
+        await splat_bot.send_message(message.channel, 'Version 1.0.1')
 
     if message.content.startswith('!help'):
         if number_option == 1:
@@ -121,12 +121,23 @@ async def on_message(message):
         await splat_bot.send_message(message.channel, 'Pong')
 
     if message.content.startswith('!theGame'):
-        for _ in range(3):
-            temps_aleatoire = random.randint(1, 120)
-            await asyncio.sleep(temps_aleatoire)
-            await splat_bot.send_message(message.channel, 'Perdu')
+        if number_option == 1:
+            for _ in range(3):
+                temps_aleatoire = random.randint(1, 600)
+                await asyncio.sleep(temps_aleatoire)
+                await splat_bot.send_message(message.channel, 'Perdu')
+        if number_option == 2 :
+            if type(cmd[1]) is int:
+                if cmd[1] < 36000:
+                    temps_aleatoire = random.randint(1, cmd[1])
+                    await asyncio.sleep(temps_aleatoire)
+                    await splat_bot.send_message(message.channel, 'Perdu')
+            if type(cmd[1]) is str:
+                all_members = discord.server.Member
+                random.shuffle(all_members)
+                await splat_bot.send_message(message.channel, "Perdu {all_member[0].mention}")
 
-    if message.content.startswith('!perdu'):
+    if message.content.startswith('!gitHub'):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
 
     if message.content.startswith('!bite'):
@@ -168,4 +179,4 @@ async def on_message(message):
             random.shuffle(list_mangay)
             await splat_bot.send_message(message.channel, list_mangay[0])
 
-splat_bot.run('MzI4NjQ4MDQyMDE2MTQ1NDIw.DDP9MA.f9te3zjYCT-KM1Sg0xq-Izdj3dM')
+splat_bot.run(input())

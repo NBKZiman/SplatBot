@@ -39,7 +39,8 @@ help_dict['help_perdu'] = "Fais perdre le bot"
 help_dict['help_gitHub'] = "Affiche le github du bot, vous pouvez venir aider à sa conception si vous le voulez"
 
 help_dict['help_theGame'] = "Trois perdus sont envoyés sur le chan à des moments aléatoires après l'émission de la " \
-                            "commande. "
+                            "commande. Vous pouvez mettre en argument un nombre de seconde maximum d'attente ou le " \
+                            "nom de quelqu'un que vous voulez faire perdre."
 
 
 def get_help(commande: str) -> str:
