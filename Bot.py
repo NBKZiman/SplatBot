@@ -2,6 +2,7 @@
 # coding: utf-8
 import asyncio
 import random
+import os
 
 import discord
 
@@ -176,4 +177,4 @@ async def on_message(message):
             random.shuffle(list_mangay)
             await splat_bot.send_message(message.channel, list_mangay[0])
 
-splat_bot.run(token)
+splat_bot.run(os.environ.get('TOKEN'))
