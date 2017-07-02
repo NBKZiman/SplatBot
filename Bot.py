@@ -2,7 +2,6 @@
 # coding: utf-8
 import asyncio
 import random
-import time
 
 import discord
 
@@ -14,7 +13,7 @@ splat_bot = discord.Client()  # nom du bot
 
 
 def assert_date(year: int, month: int, day: int) -> bool:
-    """Vérifie que les dates données en arguments sont bien valides, renvoi un booleen"""
+    """Vérifie que les dates données en arguments sont bien valides, renvoi un booléen"""
     if (type(year) is int) and (type(month) is int) and (type(day) is int):
         if (0 < month < 13) and (0 < day < 32):
             return True
@@ -43,12 +42,11 @@ async def on_ready():
 
 @splat_bot.event
 async def on_message(message):
+    """Definit les reactions aux messages des utilisateurs"""
     cmd = message.content.split(' ')
     number_option = len(cmd)
     if message.author == splat_bot.user:  # évite que le bot ne se réponde à lui même
         return
-
-    """Definit les reactions aux messages des utilisateurs"""
     if message.content.startswith('!splat'):  # reaction à !splat
         year, month, day, *_ = time.localtime()
         today_splat_date = SplatDate(year, month, day)  # conversion en date splatonique
@@ -74,7 +72,7 @@ async def on_message(message):
                     await splat_bot.send_message(message.channel,
                                                  "Nous étions le {}".format(splat_date_option.formatted_date()))
 
-    if message.content.startswith('!férié'):  # réaction à !Feriés
+    if message.content.startswith('!férié'):  # réaction à !férié
         if message.content == '!férié':
             holiday_cause_is = today_holiday_cause()
             if holiday_cause_is:
@@ -102,7 +100,6 @@ async def on_message(message):
         else:
             await splat_bot.send_message(message.channel, get_help(cmd[1]))
 
-
     if message.content.startswith('!seconde'):
         await splat_bot.send_message(message.channel,
                                      "Il s'est écoulé {} secondes depuis le Splat".format(
@@ -126,7 +123,7 @@ async def on_message(message):
                 temps_aleatoire = random.randint(1, 600)
                 await asyncio.sleep(temps_aleatoire)
                 await splat_bot.send_message(message.channel, 'Perdu')
-        if number_option == 2 :
+        if number_option == 2:
             if type(cmd[1]) is int:
                 if cmd[1] < 36000:
                     temps_aleatoire = random.randint(1, cmd[1])
@@ -145,8 +142,8 @@ async def on_message(message):
             number_option = 1
         if number_option == 1:
             await splat_bot.send_message(message.channel,
-                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:" 
-                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:" 
+                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:"
+                                         ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:"
                                          ":eggplant: :eggplant: :eggplant: :eggplant: :eggplant: :eggplant:")
 
         if number_option == 2:
@@ -168,15 +165,15 @@ async def on_message(message):
         if number_option == 1:
             list_mangay = choix_Mangay(' ')
         elif number_option >= 2:
-                list_mangay = choix_Mangay(cmd[1])
+            list_mangay = choix_Mangay(cmd[1])
         if list_mangay == []:
             await splat_bot.send_message(message.channel,
                                          "La catégorie est mauvaise tapez !mangay help pour plus d'info.")
         elif number_option <= 2:
-                for i in list_mangay:
-                    await splat_bot.send_message(message.channel, i)
+            for i in list_mangay:
+                await splat_bot.send_message(message.channel, i)
         elif cmd[2] == 'hasard':
             random.shuffle(list_mangay)
             await splat_bot.send_message(message.channel, list_mangay[0])
 
-splat_bot.run(input())
+splat_bot.run(token)

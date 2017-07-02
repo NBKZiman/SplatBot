@@ -50,13 +50,12 @@ LIEUX = [
     }
 ]
 
-def add_type(name: str):
-    self.type.append(str)
 
 def is_type(name: 'str',types: list) -> bool:
     for i in types:
         if i == name :
             return True
+
 
 def choix_Mangay(type: str) -> list:
     list_choix = []
