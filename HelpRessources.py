@@ -41,6 +41,9 @@ help_dict['help_gitHub'] = "Affiche le github du bot, vous pouvez venir aider à
 help_dict['help_theGame'] = "Trois perdus sont envoyés sur le chan à des moments aléatoires après l'émission de la " \
                             "commande. Vous pouvez mettre en argument un nombre de seconde maximum d'attente ou le " \
                             "nom de quelqu'un que vous voulez faire perdre."
+help_dict['help_log'] = "Changement depuis la dernière version \n - Création de la commande log \n - Mise à jour de " \
+                        "la commande !estCeQueJeVaisFaireG1 \n - Ajout du ping aléatoire lors de la commande !theGame" \
+                        "et du timer modifiable"
 
 
 def get_help(commande: str) -> str:

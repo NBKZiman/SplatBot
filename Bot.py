@@ -93,7 +93,7 @@ async def on_message(message):
                     await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
-        await splat_bot.send_message(message.channel, 'Version 1.0.1')
+        await splat_bot.send_message(message.channel, 'Version 1.1.0')
 
     if message.content.startswith('!help'):
         if number_option == 1:
@@ -107,7 +107,7 @@ async def on_message(message):
                                          SplatDate.seconds_since_splat()))
 
     if message.content.startswith("!estCeQueJeVaisFaireG1'"):
-        await splat_bot.send_message(message.channel, 'oui')
+        await splat_bot.send_message(message.channel, 'peut-être')
 
     if message.content.startswith('!quiEstCe?'):
         await splat_bot.send_message(message.channel, "C'est moi !! Le Splat Bot")
@@ -119,21 +119,24 @@ async def on_message(message):
         await splat_bot.send_message(message.channel, 'Pong')
 
     if message.content.startswith('!theGame'):
-        if number_option == 1:
-            for _ in range(3):
+        for i in range(3):
+            if number_option == 1:
                 temps_aleatoire = random.randint(1, 600)
                 await asyncio.sleep(temps_aleatoire)
                 await splat_bot.send_message(message.channel, 'Perdu')
-        if number_option == 2:
-            if type(cmd[1]) is int:
-                if cmd[1] < 36000:
-                    temps_aleatoire = random.randint(1, cmd[1])
-                    await asyncio.sleep(temps_aleatoire)
-                    await splat_bot.send_message(message.channel, 'Perdu')
-            if type(cmd[1]) is str:
-                all_members = discord.server.Member
-                random.shuffle(all_members)
-                await splat_bot.send_message(message.channel, "Perdu {all_member[0].mention}")
+                temps_aleatoire = random.randint(1, 600)
+                await asyncio.sleep(temps_aleatoire)
+            if number_option == 2:
+                if cmd[1] == 'hasard':
+                    all_members = message.server.members
+                    random_user = random.sample(list(all_members), 1)
+                    fmt = 'Perdu {0.mention}'
+                    await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
+                else:
+                    if int(cmd[1]) < 36000:
+                        temps_aleatoire = random.randint(1, int(cmd[1]))
+                        await asyncio.sleep(temps_aleatoire)
+                        await splat_bot.send_message(message.channel, 'Perdu')
 
     if message.content.startswith('!gitHub'):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
@@ -176,5 +179,8 @@ async def on_message(message):
         elif cmd[2] == 'hasard':
             random.shuffle(list_mangay)
             await splat_bot.send_message(message.channel, list_mangay[0])
+
+    if message.content.startswith('!log'):
+        await splat_bot.send_message(message.channel, get_help('log'))
 
 splat_bot.run(os.environ.get('TOKEN'))
