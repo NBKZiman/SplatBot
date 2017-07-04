@@ -124,19 +124,33 @@ async def on_message(message):
                 temps_aleatoire = random.randint(1, 600)
                 await asyncio.sleep(temps_aleatoire)
                 await splat_bot.send_message(message.channel, 'Perdu')
-                temps_aleatoire = random.randint(1, 600)
-                await asyncio.sleep(temps_aleatoire)
             if number_option == 2:
+                all_members = list(message.server.members)
                 if cmd[1] == 'hasard':
-                    all_members = message.server.members
-                    random_user = random.sample(list(all_members), 1)
+                    if random.randint(0, 99) == 0:
+                        everyone = message.server.default_role
+                        fmt = 'Perdu {0}'
+                        await splat_bot.send_message(message.channel, fmt.format(all_members))
+                    else:
+                        random_user = random.sample(all_members, 1)
+                        fmt = 'Perdu {0.mention}'
+                        await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
+                        await asyncio.sleep(2)
+                elif cmd[1] in all_members:
                     fmt = 'Perdu {0.mention}'
-                    await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
                 else:
                     if int(cmd[1]) < 36000:
                         temps_aleatoire = random.randint(1, int(cmd[1]))
                         await asyncio.sleep(temps_aleatoire)
                         await splat_bot.send_message(message.channel, 'Perdu')
+            if number_option == 3:
+                if cmd[2] == 'hasard':
+                    temps_aleatoire = random.randint(1, int(cmd[1]))
+                    await asyncio.sleep(temps_aleatoire)
+                    all_members = message.server.members
+                    random_user = random.sample(list(all_members), 1)
+                    fmt = 'Perdu {0.mention}'
+                    await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
 
     if message.content.startswith('!gitHub'):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')
