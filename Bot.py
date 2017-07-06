@@ -10,6 +10,7 @@ from SplatCalendar import *
 from QuoiMangay import *
 from HelpRessources import *
 
+
 splat_bot = discord.Client()  # nom du bot
 
 
@@ -32,6 +33,35 @@ def assert_bite(cmd, number_option: int) -> bool:
             return True
 
 
+def isfloat(value: str) -> bool:
+    """"fonction pour savoir si une string peut être convertible en int"""
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
+
+def assert_thegame(cmd, all_membre):
+    """Met en ordre la commande theGame pour que les utilisateurs mettent les options dans l''ordre voulue"""
+    est_nombre, est_hasard, est_membre = False, False, False
+    pos_nombre, pos_hasard, pos_membre = 0, 0, 0
+    nombre = 0
+    for i in range(1, len(cmd)):
+        if isfloat(cmd[i]):
+            est_nombre = True
+            pos_nombre = i
+            nombre = int(cmd[i])
+        if cmd[i] == "hasard":
+            est_hasard = True
+            pos_hasard = i
+        for j in range(len(all_membre)):
+            if cmd[i] == all_membre[j].name:
+                est_membre = True
+                pos_membre = i
+    return nombre, est_nombre, est_hasard, est_membre, pos_nombre, pos_hasard, pos_membre
+
+
 @splat_bot.event
 async def on_ready():
     """Indique que le bot est connecté"""
@@ -46,6 +76,7 @@ async def on_message(message):
     """Definit les reactions aux messages des utilisateurs"""
     cmd = message.content.split(' ')
     number_option = len(cmd)
+
     if message.author == splat_bot.user:  # évite que le bot ne se réponde à lui même
         return
     if message.content.startswith('!splat'):  # reaction à !splat
@@ -119,38 +150,56 @@ async def on_message(message):
         await splat_bot.send_message(message.channel, 'Pong')
 
     if message.content.startswith('!theGame'):
-        for i in range(3):
+        all_members = list(message.server.members)
+        nombre, est_nombre, est_hasard, est_membre, pos_nombre, pos_hasard, pos_membre = assert_thegame(cmd,
+                                                                                                        all_members)
+        for _ in range(3):
             if number_option == 1:
                 temps_aleatoire = random.randint(1, 600)
                 await asyncio.sleep(temps_aleatoire)
                 await splat_bot.send_message(message.channel, 'Perdu')
-            if number_option == 2:
-                all_members = list(message.server.members)
-                if cmd[1] == 'hasard':
-                    if random.randint(0, 99) == 0:
-                        everyone = message.server.default_role
-                        fmt = 'Perdu {0}'
-                        await splat_bot.send_message(message.channel, fmt.format(all_members))
-                    else:
+
+            elif number_option == 2:
+                if est_nombre:
+                    if nombre <= 36000:  # Soit 10h max
+                        temps_aleatoire = random.randint(1, nombre)
+                        await asyncio.sleep(temps_aleatoire)
+                        await splat_bot.send_message(message.channel, 'Perdu')
+
+                if est_hasard:
+                    if random.randint(0, 99) != 99:
                         random_user = random.sample(all_members, 1)
                         fmt = 'Perdu {0.mention}'
                         await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
-                        await asyncio.sleep(2)
-                elif cmd[1] in all_members:
-                    fmt = 'Perdu {0.mention}'
-                else:
-                    if int(cmd[1]) < 36000:
-                        temps_aleatoire = random.randint(1, int(cmd[1]))
-                        await asyncio.sleep(temps_aleatoire)
-                        await splat_bot.send_message(message.channel, 'Perdu')
-            if number_option == 3:
-                if cmd[2] == 'hasard':
-                    temps_aleatoire = random.randint(1, int(cmd[1]))
-                    await asyncio.sleep(temps_aleatoire)
-                    all_members = message.server.members
-                    random_user = random.sample(list(all_members), 1)
-                    fmt = 'Perdu {0.mention}'
-                    await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
+                        await asyncio.sleep(1)
+                    else:
+                        fmt = 'Perdu {0}'
+                        await splat_bot.send_message(message.channel, fmt.format(message.server.default_role))
+                        await asyncio.sleep(1)
+
+                if est_membre:
+                    for i in range(len(all_members)):
+                        if cmd[1] == all_members[i].name:
+                            fmt = 'Perdu {0.mention}'
+                            await splat_bot.send_message(message.channel, fmt.format(all_members[i]))
+
+            elif number_option == 3:
+                if est_nombre:
+                    if nombre <= 36000:  # Soit 10h max
+                        if est_hasard:
+                            temps_aleatoire = random.randint(1, nombre)
+                            random_user = random.sample(all_members, 1)
+                            fmt = 'Perdu {0.mention}'
+                            await splat_bot.send_message(message.channel, fmt.format(random_user[0]))
+                            await asyncio.sleep(temps_aleatoire)
+
+                        if est_membre:
+                            for i in range(len(all_members)):
+                                if cmd[pos_membre] == all_members[i].name:
+                                    fmt = 'Perdu {0.mention}'
+                                    await splat_bot.send_message(message.channel, fmt.format(all_members[i]))
+                                    temps_aleatoire = random.randint(1, nombre)
+                                    await asyncio.sleep(temps_aleatoire)
 
     if message.content.startswith('!gitHub'):
         await splat_bot.send_message(message.channel, 'GitHub du Bot : https://github.com/NBKZiman/SplatBot')

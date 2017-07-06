@@ -38,11 +38,15 @@ help_dict['help_perdu'] = "Fais perdre le bot"
 
 help_dict['help_gitHub'] = "Affiche le github du bot, vous pouvez venir aider à sa conception si vous le voulez"
 
-help_dict['help_theGame'] = "Trois perdus sont envoyés sur le chan à des moments aléatoires après l'émission de la " \
-                            "commande. Vous pouvez mettre en argument un nombre de seconde maximum d'attente ou le " \
-                            "nom de quelqu'un que vous voulez faire perdre."
+help_dict['help_theGame'] = "!theGame [argument]. Trois perdus sont envoyés sur le chan à des moments aléatoires " \
+                            "après l'émission de la commande. Vous pouvez mettre en argument un nombre de seconde" \
+                            " maximum d'attente ou le nom de quelqu'un que vous voulez faire perdre. Vous pouvez" \
+                            " aussi passez l'argument pour faire perdre trois personne au hasard. On peut cumuler " \
+                            "les arguments"
+
 help_dict['help_log'] = "Changement depuis la dernière version \n - Ajout d'une feature spéciale à !theGame hasard" \
-                        "\n - Ajout d'un délai lors des pings aléatoire "
+                        "\n - Ajout d'un délai lors des pings aléatoire \n - Le ping d'une personne marche" \
+                        "\n - on peut mixer les commande sur !theGame"
 
 
 def get_help(commande: str) -> str:
