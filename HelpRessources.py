@@ -44,9 +44,9 @@ help_dict['help_theGame'] = "!theGame [argument]. Trois perdus sont envoyés sur
                             " aussi passez l'argument pour faire perdre trois personne au hasard. On peut cumuler " \
                             "les arguments"
 
-help_dict['help_log'] = "Changement depuis la dernière version \n - Ajout d'une feature spéciale à !theGame hasard" \
+help_dict['help_log'] = "Changements depuis la dernière version \n - Ajout d'une feature spéciale à !theGame hasard" \
                         "\n - Ajout d'un délai lors des pings aléatoire \n - Le ping d'une personne marche" \
-                        "\n - on peut mixer les commande sur !theGame"
+                        "\n - On peut mixer les commandes sur !theGame"
 
 
 def get_help(commande: str) -> str:
