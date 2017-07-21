@@ -246,4 +246,83 @@ async def on_message(message):
     if message.content.startswith('!log'):
         await splat_bot.send_message(message.channel, get_help('log'))
 
+    if message.content.startswith('!stabbo'):
+        if assert_bite(cmd, number_option):
+            number_option = 1
+        if number_option == 1:
+            await splat_bot.send_message(message.channel,
+                                         ":dagger: :dagger: :dagger: :dagger: :dagger: :dagger: :dagger:"
+                                         ":dagger: :dagger: :dagger: :dagger: :dagger: :dagger: :dagger:"
+                                         ":dagger: :dagger: :dagger: :dagger: :dagger: :dagger:")
+
+        if number_option == 2:
+            egg = ':dagger: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            await splat_bot.send_message(message.channel, str_long)
+        if number_option == 3:
+            egg = ':dagger: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            for _ in range(int(cmd[2])):
+                await splat_bot.send_message(message.channel, str_long)
+
+    if message.content.startswith('!stabo'):
+        if assert_bite(cmd, number_option):
+            number_option = 1
+        if number_option == 1:
+            await splat_bot.send_message(message.channel,
+                                         ":knife: :knife: :knife: :knife: :knife: :knife: :knife:"
+                                         ":knife: :knife: :knife: :knife: :knife: :knife: :knife:"
+                                         ":knife: :knife: :knife: :knife: :knife: :knife:")
+
+        if number_option == 2:
+            egg = ':dagger: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            await splat_bot.send_message(message.channel, str_long)
+        if number_option == 3:
+            egg = ':knife: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            for _ in range(int(cmd[2])):
+                await splat_bot.send_message(message.channel, str_long)
+
+    if message.content.startswith('!burrito'):
+        if assert_bite(cmd, number_option):
+            number_option = 1
+        if number_option == 1:
+            await splat_bot.send_message(message.channel,
+                                         ":burrito: :burrito: :burrito: :burrito: :burrito: :burrito: :burrito:"
+                                         ":burrito: :burrito: :burrito: :burrito: :burrito: :burrito: :burrito:"
+                                         ":burrito: :burrito: :burrito: :burrito: :burrito: :burrito:")
+
+        if number_option == 2:
+            egg = ':burrito: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            await splat_bot.send_message(message.channel, str_long)
+        if number_option == 3:
+            egg = ':burrito: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            for _ in range(int(cmd[2])):
+                await splat_bot.send_message(message.channel, str_long)
+
+    if message.content.startswith('!starBurrito'):
+        await splat_bot.send_message(message.channel,
+                                    ":star: :star::burrito::burrito::star::burrito::burrito::star::star:\n"
+                                    ":star::burrito::star::star::burrito::star::star::burrito::star: \n"
+                                    ":burrito::star::star::star::star::star::star::star::burrito: \n"
+                                    ":star::burrito::star::star::ekappa::star::star::burrito::star: \n"
+                                    ":star::star::burrito::star::star::star::burrito::star::star: \n"
+                                    ":star::star::star::burrito::star::burrito::star::star::star: \n"
+                                    ":star::star::star::star::burrito::star::star::star::star:")
+
 splat_bot.run(os.environ.get('TOKEN'))
