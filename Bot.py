@@ -124,7 +124,7 @@ async def on_message(message):
                     await splat_bot.send_message(message.channel, "Ce n'est pas un jour férié")
 
     if message.content.startswith('!version'):
-        await splat_bot.send_message(message.channel, 'Version 1.1.0')
+        await splat_bot.send_message(message.channel, 'Version 1.1.1')
 
     if message.content.startswith('!help'):
         if number_option == 1:
@@ -320,8 +320,8 @@ async def on_message(message):
                                     ":star: :star::burrito::burrito::star::burrito::burrito::star::star:\n"
                                     ":star::burrito::star::star::burrito::star::star::burrito::star: \n"
                                     ":burrito::star::star::star::star::star::star::star::burrito: \n"
-                                    ":star::burrito::star::star::ekappa::star::star::burrito::star: \n"
-                                    ":star::star::burrito::star::star::star::burrito::star::star: \n"
+                                    ":star::burrito::star::star:<:ekappa:244954314005544963>:star::star::burrito:"
+                                    ":star: \n:star::star::burrito::star::star::star::burrito::star::star: \n"
                                     ":star::star::star::burrito::star::burrito::star::star::star: \n"
                                     ":star::star::star::star::burrito::star::star::star::star:")
 

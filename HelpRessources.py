@@ -10,9 +10,11 @@ help_dict['help_mangay'] = "!mangay [catégorie] [hasard]. Le bot affiche la lis
                            "fastfood\n - burger\n - commande \n - gluten-free\n - cher (qui n'est pas forcément cher " \
                            "mais il faut se déplacer pour y aller)"
 
-help_dict['help_!help'] = "Les commandes disponibles sont : !splat, !feriés, !seconde, !help, !estCeQueJeDoisFaireG1'" \
-                         ", !quiEstCe?,! perdu !version, !gitHub et !theGame. Tapez !help <commande> pour avoir plus" \
-                         " d'infos sur une commande (sans le !)."
+help_dict['help_!help'] = "Les commandes disponibles sont : `!splat`,`!feriés`, `!seconde`," \
+                          " `!help`, `!estCeQueJeDoisFaireG1'`, `!quiEstCe?`,`!perdu`" \
+                          " `!version`, `!gitHub`, `!theGame`, `!starBurrito`, `!bite` et ses" \
+                          " variantes `!stabo`, `!stabbo` et `!burrito`, `!mangay` et enfin `" \
+                          "!log` . Tapez !help <commande> pour avoir plus d'infos sur une commande (sans le !)."
 
 help_dict['help_splat'] = "!splat <jour> <mois> <année>.Sans arguments la fonction renvoie la date Splatonique du " \
                           "jour, on peut fournir une date en argument pour la convertir en date Splatonique, le bot" \
@@ -21,6 +23,18 @@ help_dict['help_splat'] = "!splat <jour> <mois> <année>.Sans arguments la fonct
 help_dict['help_bite'] = "!bite <nombre de ligne> <nombre d'aubergines>. Le bot affiche le nombre d'aubergine désiré,"\
                          " par défaut il y a une ligne de 20 aubergines. On peut afficher au maximum 10 lignes de" \
                          " 25 aubergines."
+
+help_dict['help_burrito'] = "!burrito <nombre de ligne> <nombre de burrito>. Le bot affiche le nombre de burrito " \
+                            "désiré, par défaut il y a une ligne de 20 burritos. On peut afficher au maximum 10" \
+                            " lignes de 25 burritos. :burrito:"
+
+help_dict['help_stabbo'] = "!stabbo <nombre de ligne> <nombre de couteau>. Le bot affiche le nombre de couteau " \
+                            "désiré, par défaut il y a une ligne de 20 couteaux. On peut afficher au maximum 10" \
+                            " lignes de 25 couteaux. :dagger:"
+
+help_dict['help_stabbo'] = "!stabo <nombre de ligne> <nombre de couteau>. Le bot affiche le nombre de couteau " \
+                            "désiré, par défaut il y a une ligne de 20 couteaux. On peut afficher au maximum 10" \
+                            " lignes de 25 couteaux. :knife:"
 
 help_dict['help_férié'] = "!férié <jour> <mois> <année>. Par défaut, détermine si la date d'aujourd'hui est un jour" \
                           " férié selon le SplatCalendar. On peut lui passer une date en argument pour savoir si le" \
@@ -44,13 +58,9 @@ help_dict['help_theGame'] = "!theGame [argument]. Trois perdus sont envoyés sur
                             " aussi passez l'argument pour faire perdre trois personne au hasard. On peut cumuler " \
                             "les arguments"
 
-help_dict['help_log'] = "Changements depuis la dernière version \n - Ajout des commandes !stabo, !stabbo et !burrito " \
-                        "qui fonctionnent comme !bite \n -Ajout de la commande !starBurrito"
+help_dict['help_log'] = "Changements depuis la dernière version \n - Correction de !starBurrito " \
+                        "\n - Mise à jour de help"
 
 
 def get_help(commande: str) -> str:
     return help_dict['help_' + commande]
-
-
-
-
