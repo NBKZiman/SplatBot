@@ -12,6 +12,7 @@ from HelpRessources import *
 
 
 splat_bot = discord.Client()  # nom du bot
+jeu = "Le jeu de la semaine est : il n'y a aucun jeu pour le moment" # Variable contenant le jeu de la semaine
 
 
 def assert_date(year: int, month: int, day: int) -> bool:
@@ -317,12 +318,65 @@ async def on_message(message):
 
     if message.content.startswith('!starBurrito'):
         await splat_bot.send_message(message.channel,
-                                    ":star: :star::burrito::burrito::star::burrito::burrito::star::star:\n"
-                                    ":star::burrito::star::star::burrito::star::star::burrito::star: \n"
-                                    ":burrito::star::star::star::star::star::star::star::burrito: \n"
-                                    ":star::burrito::star::star:<:ekappa:244954314005544963>:star::star::burrito:"
-                                    ":star: \n:star::star::burrito::star::star::star::burrito::star::star: \n"
-                                    ":star::star::star::burrito::star::burrito::star::star::star: \n"
-                                    ":star::star::star::star::burrito::star::star::star::star:")
+                                     ":star: :star::burrito::burrito::star::burrito::burrito::star::star:\n"
+                                     ":star::burrito::star::star::burrito::star::star::burrito::star: \n"
+                                     ":burrito::star::star::star::star::star::star::star::burrito: \n"
+                                     ":star::burrito::star::star:<:ekappa:244954314005544963>:star::star::burrito:"
+                                     ":star: \n:star::star::burrito::star::star::star::burrito::star::star: \n"
+                                     ":star::star::star::burrito::star::burrito::star::star::star: \n"
+                                     ":star::star::star::star::burrito::star::star::star::star:")
+
+    if message.content.startswith('!cato'):
+        if assert_bite(cmd, number_option):
+            number_option = 1
+        if number_option == 1:
+            await splat_bot.send_message(message.channel,
+                                         ":cat: :cat: :cat: :cat: :cat: :cat: :cat: :cat: :cat: :cat: :cat: :cat: :cat:"
+                                         " :cat: :cat: :cat: :cat: :cat: :cat: :cat:")
+
+        if number_option == 2:
+            egg = ':cat: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            await splat_bot.send_message(message.channel, str_long)
+        if number_option == 3:
+            egg = ':cat: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            for _ in range(int(cmd[2])):
+                await splat_bot.send_message(message.channel, str_long)
+
+    if message.content.startswith('!doggo'):
+        if assert_bite(cmd, number_option):
+            number_option = 1
+        if number_option == 1:
+            await splat_bot.send_message(message.channel,
+                                         ":dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog: :dog:"
+                                         " :dog: :dog: :dog: :dog: :dog: :dog: :dog:")
+
+        if number_option == 2:
+            egg = ':dog: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            await splat_bot.send_message(message.channel, str_long)
+        if number_option == 3:
+            egg = ':dog: '
+            str_long = ' '
+            for _ in range(int(cmd[1])):
+                str_long = str_long + egg
+            for _ in range(int(cmd[2])):
+                await splat_bot.send_message(message.channel, str_long)
+
+    if message.content.startswith('!jeuSemaine'):
+        global jeu
+        await splat_bot.send_message(message.channel, jeu)
+
+    if message.content.startswith('+jeuSemaine'):
+        if message.author.name == 'Ziman':
+            global jeu
+            jeu = "Le jeu de la semaine est : " + message.content[12:]
 
 splat_bot.run(os.environ.get('TOKEN'))
