@@ -32,9 +32,17 @@ help_dict['help_stabbo'] = "!stabbo <nombre de ligne> <nombre de couteau>. Le bo
                             "désiré, par défaut il y a une ligne de 20 couteaux. On peut afficher au maximum 10" \
                             " lignes de 25 couteaux. :dagger:"
 
-help_dict['help_stabbo'] = "!stabo <nombre de ligne> <nombre de couteau>. Le bot affiche le nombre de couteau " \
+help_dict['help_stabo'] = "!stabo <nombre de ligne> <nombre de couteau>. Le bot affiche le nombre de couteau " \
                             "désiré, par défaut il y a une ligne de 20 couteaux. On peut afficher au maximum 10" \
                             " lignes de 25 couteaux. :knife:"
+
+help_dict['help_cato'] = "!cato <nombre de ligne> <nombre de chat>. Le bot affiche le nombre de chat " \
+                            "désiré, par défaut il y a une ligne de 20 chats. On peut afficher au maximum 10" \
+                            " lignes de 25 couteaux. :cat:"
+
+help_dict['help_doggo'] = "!cato <nombre de ligne> <nombre de chien>. Le bot affiche le nombre de chien " \
+                            "désiré, par défaut il y a une ligne de 20 chiens. On peut afficher au maximum 10" \
+                            " lignes de 25 couteaux. :cat:"
 
 help_dict['help_férié'] = "!férié <jour> <mois> <année>. Par défaut, détermine si la date d'aujourd'hui est un jour" \
                           " férié selon le SplatCalendar. On peut lui passer une date en argument pour savoir si le" \
@@ -58,7 +66,9 @@ help_dict['help_theGame'] = "!theGame [argument]. Trois perdus sont envoyés sur
                             " aussi passez l'argument pour faire perdre trois personne au hasard. On peut cumuler " \
                             "les arguments"
 
-help_dict['help_log'] = "Changements depuis la dernière version \n - Correction de !starBurrito " \
+help_dict['help_jeuSemaine'] = "Affiche le jeu de la semaine."
+
+help_dict['help_log'] = "Changements depuis la dernière version \n - ajout de !cato et !dogo " \
                         "\n - Mise à jour de help"
 
 
