@@ -12,7 +12,7 @@ from HelpRessources import *
 
 
 splat_bot = discord.Client()  # nom du bot
-jeu_de_la_semaine = "Le jeu de la semaine est : il n'y a aucun jeu pour le moment" # Variable contenat le jeu de la semaine
+jeu = "Le jeu de la semaine est : il n'y a aucun jeu pour le moment" # Variable contenant le jeu de la semaine
 
 
 def assert_date(year: int, month: int, day: int) -> bool:
@@ -371,10 +371,12 @@ async def on_message(message):
                 await splat_bot.send_message(message.channel, str_long)
 
     if message.content.startswith('!jeuSemaine'):
-        await splat_bot.send_message(message.channel, jeu_de_la_semaine)
+        global jeu
+        await splat_bot.send_message(message.channel, jeu)
 
     if message.content.startswith('+jeuSemaine'):
         if message.author.name == 'Ziman':
-            jeu_de_la_semaine = "Le jeu de la semaine est" + message[:12]
+            global jeu
+            jeu = "Le jeu de la semaine est : " + message.content[12:]
 
 splat_bot.run(os.environ.get('TOKEN'))
